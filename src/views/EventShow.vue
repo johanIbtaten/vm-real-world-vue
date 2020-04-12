@@ -19,8 +19,8 @@
     <h2>
       Attendees
       <span class="badge -fill-gradient">{{
-        // Si event.attendees existe on affiche la taille du tableau
-        // sinon on affiche 0
+        /* Si event.attendees existe on affiche la taille du tableau
+        sinon on affiche 0 */
         event.attendees ? event.attendees.length : 0
       }}</span>
     </h2>

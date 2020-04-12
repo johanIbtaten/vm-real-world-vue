@@ -43,7 +43,7 @@ requireComponent.keys().forEach(fileName => {
   Vue.component(componentName, componentConfig.default || componentConfig)
 })
 
-// On importe router et store pour pouvoir les utiliser
+// On injecte router et store pour pouvoir les utiliser
 // dans notre application
 new Vue({
   router,

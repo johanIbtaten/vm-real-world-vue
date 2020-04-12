@@ -31,6 +31,11 @@ export default new Router({
       component: EventList
     },
     {
+      path: '/event/create',
+      name: 'event-create',
+      component: EventCreate
+    },
+    {
       path: '/event/:id',
       name: 'event-show',
       component: EventShow,
@@ -38,11 +43,6 @@ export default new Router({
       // en props avec le nom id plutôt que d'utiliser
       // l'objet $route.params.id
       props: true
-    },
-    {
-      path: '/event/create',
-      name: 'event-create',
-      component: EventCreate
     }
   ]
 })
