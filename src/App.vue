@@ -1,19 +1,26 @@
+<!-- Commented file -->
 <template>
   <div id="app">
     <NavBar />
+    <!-- Emplacement où seront insérés les composants 
+    associés aux routes -->
     <router-view />
   </div>
 </template>
 
 <script>
+// On importe le composant NavBar qui sera affiché dans
+// toute l'application
 import NavBar from '@/components/NavBar.vue'
 export default {
+  // On déclare les composants inclus dans cette vue
   components: {
     NavBar
   }
 }
 </script>
 
+<!-- On implémente les styles globaux pour toute l'application -->
 <style>
 html {
   -webkit-text-size-adjust: 100%;

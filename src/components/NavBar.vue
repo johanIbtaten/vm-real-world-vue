@@ -1,7 +1,11 @@
+<!-- Commented file -->
 <template>
   <div id="nav" class="nav">
+    <!-- On crée un lien qui appelle la route / qui est 
+    la page d'accueil -->
     <router-link to="/" class="brand">Real World Events</router-link>
     <nav>
+      <!-- On crée un lien qui appelle la route nommées event-list -->
       <router-link :to="{ name: 'event-list' }">List</router-link> |
       <router-link :to="{ name: 'event-create' }">Create</router-link>
     </nav>
@@ -12,6 +16,8 @@
 export default {}
 </script>
 
+<!-- On implémente des styles scopés au composant 
+grâce à l'attribut scoped -->
 <style scoped>
 .nav {
   display: flex;

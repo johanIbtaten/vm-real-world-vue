@@ -1,3 +1,4 @@
+<!-- Commented file -->
 <template>
   <div>
     <div class="event-header">
@@ -7,6 +8,7 @@
       <h5>Category: {{ event.category }}</h5>
     </div>
 
+    <!-- On affiche l'icone map avec du contenu -->
     <BaseIcon name="map"><h2>Location</h2></BaseIcon>
 
     <address>{{ event.location }}</address>
@@ -17,10 +19,14 @@
     <h2>
       Attendees
       <span class="badge -fill-gradient">{{
+        // Si event.attendees existe on affiche la taille du tableau
+        // sinon on affiche 0
         event.attendees ? event.attendees.length : 0
       }}</span>
     </h2>
     <ul class="list-group">
+      <!-- On boucle sur le tableau attendees et on met l'index 
+      comme key -->
       <li
         v-for="(attendee, index) in event.attendees"
         :key="index"
@@ -34,6 +40,8 @@
 <script>
 import EventService from '@/services/EventService.js'
 export default {
+  // On récupère la props id qui vient du Router et qui est
+  // un paramètre de l'URL
   props: ['id'],
   data() {
     return {
@@ -41,8 +49,11 @@ export default {
     }
   },
   created() {
+    // On récupère l'event avec l'id this.id
     EventService.getEvent(this.id)
       .then(response => {
+        // On hydrate la propriété event de notre state
+        // avec l'objet récupéré depuis l'API
         this.event = response.data
       })
       .catch(error => {
@@ -51,6 +62,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 .location {
   margin-bottom: 0;
