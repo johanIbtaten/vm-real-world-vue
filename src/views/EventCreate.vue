@@ -89,10 +89,10 @@ export default {
   methods: {
     // Cette méthode est appelé à la soumission du formulaire
     createEvent() {
-      // Elle appelle l'action createEvent du store en lui passant
-      // le payload this.event
+      // Elle appelle l'action createEvent du module de store
+      // event en lui passant le payload this.event
       this.$store
-        .dispatch('createEvent', this.event)
+        .dispatch('event/createEvent', this.event)
         // Quand l'action via dispatch est résolut
         .then(() => {
           // On appelle la route event-show en lui passant

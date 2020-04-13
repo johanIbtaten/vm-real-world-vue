@@ -1,12 +1,12 @@
 <!-- Commented file -->
 <template>
   <div>
-    <h1>Events Listing</h1>
+    <h1>Events for {{ user.user.name }}</h1>
     <!-- On boucle sur le tableau des events et pour chaque event
     on affiche un composant EvenCard en lui passant une props :event
     et une clé :key indispensable quand on affiche des composants 
     en boucle -->
-    <EventCard v-for="event in events" :key="event.id" :event="event" />
+    <EventCard v-for="event in event.events" :key="event.id" :event="event" />
     <!-- La balise template dans un template permet d'éviter
     de mettre une div, template ne s'affichera pas une fois compilé -->
     <template v-if="page != 1">
@@ -48,7 +48,11 @@ export default {
     this.perPage = 3
 
     // On récupère les events depuis le store
-    this.$store.dispatch('fetchEvents', {
+    // On appelle l'action fetchEvents du namespace event
+    // Si event n'étais pas namespaced on pourrait appeler
+    // fetchEvents directement mais avec les namespace on évite
+    // les conflits de nom d'actions
+    this.$store.dispatch('event/fetchEvents', {
       perPage: this.perPage,
       page: this.page
     })
@@ -63,9 +67,10 @@ export default {
     // On crée un propriété calculée qui retourne true si on
     // est pas sur la dernière page
     hasNextPage() {
-      return this.eventsTotal > this.page * this.perPage
+      return this.event.eventsTotal > this.page * this.perPage
     },
-    ...mapState(['events', 'eventsTotal'])
+    // On inclut les modules de store event et user
+    ...mapState(['event', 'user'])
   }
 }
 </script>
