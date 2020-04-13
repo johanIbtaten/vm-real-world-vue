@@ -26,5 +26,8 @@ export default {
   // du endpoint http://localhost:3000/events/:id
   getEvent(id) {
     return apiClient.get('/events/' + id)
+  },
+  postEvent(event) {
+    return apiClient.post('/events', event)
   }
 }
