@@ -3,8 +3,9 @@
   <div id="app">
     <NavBar />
     <!-- Emplacement où seront insérés les composants 
-    associés aux routes -->
-    <router-view />
+    associés aux routes. La key $route.fullPath permet
+    de mettre à jour le composant à chaque changement d'URL  -->
+    <router-view :key="$route.fullPath" />
   </div>
 </template>
 

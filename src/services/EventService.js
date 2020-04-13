@@ -19,8 +19,10 @@ const apiClient = axios.create({
 export default {
   // Méthode qui récupère un tableau d'évènements au niveau
   // du endpoint http://localhost:3000/events
-  getEvents() {
-    return apiClient.get('/events')
+  // On passe en argument à la fonction et au endpoint le nombre maximun
+  // d'éléments par page et le numéro de la page courante
+  getEvents(perPage, page) {
+    return apiClient.get('/events?_limit=' + perPage + '&_page=' + page)
   },
   // Méthode qui récupère un évènement associé à un id au niveau
   // du endpoint http://localhost:3000/events/:id

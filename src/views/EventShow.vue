@@ -37,29 +37,19 @@
     </ul>
   </div>
 </template>
+
 <script>
-import EventService from '@/services/EventService.js'
+import { mapState } from 'vuex'
+
 export default {
   // On récupère la props id qui vient du Router et qui est
   // un paramètre de l'URL
   props: ['id'],
-  data() {
-    return {
-      event: {}
-    }
-  },
   created() {
     // On récupère l'event avec l'id this.id
-    EventService.getEvent(this.id)
-      .then(response => {
-        // On hydrate la propriété event de notre state
-        // avec l'objet récupéré depuis l'API
-        this.event = response.data
-      })
-      .catch(error => {
-        console.log('There was an error:', error.response)
-      })
-  }
+    this.$store.dispatch('fetchEvent', this.id)
+  },
+  computed: mapState(['event'])
 }
 </script>
 
