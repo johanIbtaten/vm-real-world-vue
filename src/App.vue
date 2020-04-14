@@ -2,6 +2,9 @@
 <template>
   <div id="app">
     <NavBar />
+    <!-- Composant de notification qui va afficher un message
+    dans la fenêtre du navigateur -->
+    <NotificationContainer />
     <!-- Emplacement où seront insérés les composants 
     associés aux routes. La key $route.fullPath permet
     de mettre à jour le composant à chaque changement d'URL  -->
@@ -12,11 +15,14 @@
 <script>
 // On importe le composant NavBar qui sera affiché dans
 // toute l'application
-import NavBar from '@/components/NavBar.vue'
+import NavBar from '@/components/NavBar'
+import NotificationContainer from '@/components/NotificationContainer'
+
 export default {
   // On déclare les composants inclus dans cette vue
   components: {
-    NavBar
+    NavBar,
+    NotificationContainer
   }
 }
 </script>

@@ -36,18 +36,45 @@ export const actions = {
   // automatiquement par vue en paramètre des actions.
   // On a également le paramètre event qui est un payload passé
   // à l'action
-  createEvent({ commit }, event) {
+  createEvent({ commit, dispatch }, event) {
     // Cette action post les données du formulaire vers un endpoint
     // de notre API via notre EventService. Si le post se passe bien
     // et que la promesse est résolue, on commit la mutation avec
     // son payload.
     // L'action de post de notre Event Service ici retourne une
     // promesse qui peut être résolue ou non
-    return EventService.postEvent(event).then(() => {
-      commit('ADD_EVENT', event)
-    })
+    return EventService.postEvent(event)
+      .then(() => {
+        // Si le post c'est bien passé on commit la mutation pour
+        // ajouter un objet event au tableau du state events
+        commit('ADD_EVENT', event)
+        // On déclare un objet notification de type success
+        // avec un message de succès qui sera afficher à l'utilisateur
+        const notification = {
+          type: 'success',
+          message: 'Your event has been created!'
+        }
+        // On dispatch l'action add du module notification namespaced
+        // qui va ajouter la notification à son state, on met root à
+        // true pour être sûr de bien retrouver le module à partir de
+        // la racine store
+        dispatch('notification/add', notification, { root: true })
+      })
+      .catch(error => {
+        // Si il y a un problème retourné par le client API
+        // on déclare une notification de type error avec le message
+        // d'erreur retourné
+        const notification = {
+          type: 'error',
+          message: 'There was a problem creating your event: ' + error.message
+        }
+        // On ajoute la notification au module des notifications
+        dispatch('notification/add', notification, { root: true })
+        // On fait remonter l'erreur au composant qui utilise ce module
+        throw error
+      })
   },
-  fetchEvents({ commit }, { perPage, page }) {
+  fetchEvents({ commit, dispatch }, { perPage, page }) {
     // On appelle notre client API basé sur Axios pour faire une
     // requête qui va nous renvoyer un tableau d'objets event
     // avec une limite perPage et la page courante en paramètres
@@ -60,10 +87,14 @@ export const actions = {
         commit('SET_EVENTS', response.data)
       })
       .catch(error => {
-        console.log('There was an error:', error.response)
+        const notification = {
+          type: 'error',
+          message: 'There was a problem fetching events: ' + error.message
+        }
+        dispatch('notification/add', notification, { root: true })
       })
   },
-  fetchEvent({ commit, getters }, id) {
+  fetchEvent({ commit, getters, dispatch }, id) {
     var event = getters.getEventById(id)
 
     // Si l'event est déjà dans le state events on l'extrait
@@ -78,7 +109,11 @@ export const actions = {
           commit('SET_EVENT', response.data)
         })
         .catch(error => {
-          console.log('There was an error:', error.response)
+          const notification = {
+            type: 'error',
+            message: 'There was a problem fetching event: ' + error.message
+          }
+          dispatch('notification/add', notification, { root: true })
         })
     }
   }
