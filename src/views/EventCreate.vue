@@ -66,6 +66,8 @@
 <script>
 // On importe le composant datepicker
 import Datepicker from 'vuejs-datepicker'
+import NProgress from 'nprogress'
+
 export default {
   components: {
     Datepicker
@@ -89,6 +91,7 @@ export default {
   methods: {
     // Cette méthode est appelé à la soumission du formulaire
     createEvent() {
+      NProgress.start()
       // Elle appelle l'action createEvent du module de store
       // event en lui passant le payload this.event
       this.$store
@@ -104,9 +107,9 @@ export default {
           // Ensuite on remet le formulaire à 0 en créer un
           // nouvel objet personnalisé event vide
           this.event = this.createFreshEventObject()
-          console.log('I was ran')
         })
         .catch(() => {
+          NProgress.done()
           // Si il y a un problème lors de la requête API on le
           // logue dans la console
           console.log('There was a problem creating your event')

@@ -8,7 +8,8 @@ export const namespaced = true
 export const state = {
   events: [],
   eventsTotal: 0,
-  event: {}
+  event: {},
+  perPage: 3
 }
 
 export const mutations = {
@@ -48,6 +49,7 @@ export const actions = {
         // Si le post c'est bien passé on commit la mutation pour
         // ajouter un objet event au tableau du state events
         commit('ADD_EVENT', event)
+        commit('SET_EVENT', event)
         // On déclare un objet notification de type success
         // avec un message de succès qui sera afficher à l'utilisateur
         const notification = {
@@ -74,11 +76,11 @@ export const actions = {
         throw error
       })
   },
-  fetchEvents({ commit, dispatch }, { perPage, page }) {
+  fetchEvents({ commit, dispatch, state }, { page }) {
     // On appelle notre client API basé sur Axios pour faire une
     // requête qui va nous renvoyer un tableau d'objets event
     // avec une limite perPage et la page courante en paramètres
-    EventService.getEvents(perPage, page)
+    return EventService.getEvents(state.perPage, page)
       .then(response => {
         // On commit une mutation qui va affecter le nombre
         // total recupéré dans le header de la response de l'API
@@ -94,19 +96,26 @@ export const actions = {
         dispatch('notification/add', notification, { root: true })
       })
   },
-  fetchEvent({ commit, getters, dispatch }, id) {
+  fetchEvent({ commit, getters, dispatch, state }, id) {
+    if (id == state.event.id) {
+      return state.event
+    }
     var event = getters.getEventById(id)
 
     // Si l'event est déjà dans le state events on l'extrait
     // des events pour l'affecter au state event
     if (event) {
       commit('SET_EVENT', event)
-      // Si l'event n'existe pas dans le state events
-      // On le récupère depuis l'API
+      return event
+      // Si l'event n'existe pas dans le state events parce qu'on accède
+      // à cette event directement par l'URL sans passer par la page qui
+      // liste les events, events est donc vide, alors on le récupère
+      // depuis l'API
     } else {
-      EventService.getEvent(id)
+      return EventService.getEvent(id)
         .then(response => {
           commit('SET_EVENT', response.data)
+          return response.data
         })
         .catch(error => {
           const notification = {

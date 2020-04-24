@@ -39,26 +39,32 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+// import { mapState , mapActions } from 'vuex'
 
 export default {
+  props: {
+    event: {
+      type: Object,
+      required: true
+    }
+  }
   // On récupère la props id qui vient du Router et qui est
   // un paramètre de l'URL
-  props: ['id'],
-  created() {
-    // On récupère l'event avec l'id this.id
-    // On utilise l'action fetchEvent fourni par mapActions
-    this.fetchEvent(this.id)
-  },
+  // props: ['id'],
+  // created() {
+  //   // On récupère l'event avec l'id this.id
+  //   // On utilise l'action fetchEvent fourni par mapActions
+  //   this.fetchEvent(this.id)
+  // },
   // On retourne le state du module de store event que l'on
   // affecte dans event pour simplifier son utilisation dans
   // le template
-  computed: mapState({
-    event: state => state.event.event
-  }),
+  // computed: mapState({
+  //   event: state => state.event.event
+  // }),
   // On utilise mapActions pour importer dans le comosant
   //  l'action fetchEvent qui se trouve dans le namespace event
-  methods: mapActions('event', ['fetchEvent'])
+  // methods: mapActions('event', ['fetchEvent'])
 }
 </script>
 

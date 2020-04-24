@@ -36,38 +36,63 @@
 <script>
 import EventCard from '@/components/EventCard.vue'
 import { mapState } from 'vuex'
+import store from '@/store/store'
+
+function getPageEvents(routeTo, next) {
+  const currentPage = parseInt(routeTo.query.page) || 1
+  store
+    .dispatch('event/fetchEvents', {
+      page: currentPage
+    })
+    .then(() => {
+      routeTo.params.page = currentPage
+      next()
+    })
+}
 
 export default {
+  props: {
+    page: {
+      type: Number,
+      required: true
+    }
+  },
   components: {
     EventCard
   },
-  created() {
-    // On place perPage ici car on a pas besoin que ce soit une donnée
-    // réactive et en même temps on souhaite pouvoir y accéder dans
-    // notre composant
-    this.perPage = 3
+  // created() {
+  //   // On place perPage ici car on a pas besoin que ce soit une donnée
+  //   // réactive et en même temps on souhaite pouvoir y accéder dans
+  //   // notre composant
+  //   this.perPage = 3
 
-    // On récupère les events depuis le store
-    // On appelle l'action fetchEvents du namespace event
-    // Si event n'étais pas namespaced on pourrait appeler
-    // fetchEvents directement mais avec les namespace on évite
-    // les conflits de nom d'actions
-    this.$store.dispatch('event/fetchEvents', {
-      perPage: this.perPage,
-      page: this.page
-    })
+  //   // On récupère les events depuis le store
+  //   // On appelle l'action fetchEvents du namespace event
+  //   // Si event n'étais pas namespaced on pourrait appeler
+  //   // fetchEvents directement mais avec les namespace on évite
+  //   // les conflits de nom d'actions
+  //   this.$store.dispatch('event/fetchEvents', {
+  //     perPage: this.perPage,
+  //     page: this.page
+  //   })
+  // },
+  beforeRouteEnter(routeTo, routeFrom, next) {
+    getPageEvents(routeTo, next)
+  },
+  beforeRouteUpdate(routeTo, routeFrom, next) {
+    getPageEvents(routeTo, next)
   },
   computed: {
-    page() {
-      // On récupère la valeur du paramètre d'URL page
-      // Si il n'existe pas on affecte 1 à la propriété
-      // calculée page
-      return parseInt(this.$route.query.page) || 1
-    },
+    // page() {
+    //   // On récupère la valeur du paramètre d'URL page
+    //   // Si il n'existe pas on affecte 1 à la propriété
+    //   // calculée page
+    //   return parseInt(this.$route.query.page) || 1
+    // },
     // On crée un propriété calculée qui retourne true si on
     // est pas sur la dernière page
     hasNextPage() {
-      return this.event.eventsTotal > this.page * this.perPage
+      return this.event.eventsTotal > this.page * this.event.perPage
     },
     // On inclut les modules de store event et user
     ...mapState(['event', 'user'])
