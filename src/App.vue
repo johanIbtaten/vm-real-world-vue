@@ -135,6 +135,12 @@ small {
   background: linear-gradient(to right, #16c0b0, #84cf6a);
   color: #fff;
 }
+
+.-fill-gradient {
+  background: linear-gradient(to right, #16c0b0, #84cf6a) !important;
+  color: #fff;
+}
+
 button,
 label,
 input,
