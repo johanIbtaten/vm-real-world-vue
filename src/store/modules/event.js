@@ -96,7 +96,7 @@ export const actions = {
         dispatch('notification/add', notification, { root: true })
       })
   },
-  fetchEvent({ commit, getters, dispatch, state }, id) {
+  fetchEvent({ commit, getters, state }, id) {
     if (id == state.event.id) {
       return state.event
     }
@@ -112,18 +112,10 @@ export const actions = {
       // liste les events, events est donc vide, alors on le récupère
       // depuis l'API
     } else {
-      return EventService.getEvent(id)
-        .then(response => {
-          commit('SET_EVENT', response.data)
-          return response.data
-        })
-        .catch(error => {
-          const notification = {
-            type: 'error',
-            message: 'There was a problem fetching event: ' + error.message
-          }
-          dispatch('notification/add', notification, { root: true })
-        })
+      return EventService.getEvent(id).then(response => {
+        commit('SET_EVENT', response.data)
+        return response.data
+      })
     }
   }
 }
