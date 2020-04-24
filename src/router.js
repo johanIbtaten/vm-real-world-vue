@@ -16,6 +16,8 @@ import store from '@/store/store'
 import NotFound from './views/NotFound.vue'
 import NetworkIssue from './views/NetworkIssue.vue'
 
+import ExampleFormValidation from './views/ExampleFormValidation.vue'
+
 // On déclare à notre instance de vue que l'on va utiliser vue-router
 Vue.use(Router)
 
@@ -40,6 +42,10 @@ const router = new Router({
       path: '/event/create',
       name: 'event-create',
       component: EventCreate
+    },
+    {
+      path: '/vuelidate',
+      component: ExampleFormValidation
     },
     {
       path: '/event/:id',
