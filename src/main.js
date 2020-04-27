@@ -10,6 +10,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store/store'
 import Vuelidate from 'vuelidate'
+import DateFilter from './filters/date'
+
+Vue.filter('date', DateFilter)
 
 import 'nprogress/nprogress.css'
 
