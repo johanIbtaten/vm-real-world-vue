@@ -7,7 +7,8 @@
     <nav>
       <!-- On crée un lien qui appelle la route nommées event-list -->
       <router-link :to="{ name: 'event-list' }">List</router-link> |
-      <router-link :to="{ name: 'event-create' }">Create</router-link>
+      <router-link :to="{ name: 'event-create' }">Create</router-link> |
+      <router-link :to="{ name: 'slots' }">Slots</router-link>
     </nav>
   </div>
 </template>
