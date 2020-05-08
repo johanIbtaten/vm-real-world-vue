@@ -29,6 +29,9 @@ export default {
 
 <!-- On implémente les styles globaux pour toute l'application -->
 <style>
+.jojo {
+  background: burlywood;
+}
 html {
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;

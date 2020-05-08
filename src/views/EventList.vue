@@ -1,7 +1,7 @@
 <!-- Commented file -->
 <template>
   <div>
-    <h1>Events for {{ user.user.name }}</h1>
+    <h1 :class="$style.jojo">Events for {{ user.user.name }}</h1>
     <!-- On boucle sur le tableau des events et pour chaque event
     on affiche un composant EvenCard en lui passant une props :event
     et une clé :key indispensable quand on affiche des composants 
@@ -99,3 +99,9 @@ export default {
   }
 }
 </script>
+
+<style module>
+.jojo {
+  color: pink;
+}
+</style>

@@ -13,7 +13,7 @@
 
     <address>{{ event.location }}</address>
 
-    <h2>Event details</h2>
+    <h2 class="jojo" >Event details</h2>
     <p>{{ event.description }}</p>
 
     <h2>
